@@ -1,14 +1,16 @@
 #lang racket
 (provide fileToInts)
-(provide file_contents)
+(provide file-contents)
 (provide read_number_list)
+(provide strings->numbers)
+(provide sum-list)
 
 
-(define (file_contents filename)
+(define (file-contents filename)
   (port->string (open-input-file filename) #:close? #t))
 
 (define (fileToInts file)
-  (map string->number (string-split (file_contents file))))
+  (map string->number (string-split (file-contents file))))
 
 (define (read_number input-port)
       (define char (read-char input-port))
@@ -23,3 +25,13 @@
 (module+ test
   (require rackunit)
   (check-equal? (fileToInts "test.txt") '(1123 1231231 3223132313 1140339994)))
+
+(define (strings->numbers listOfstrings)
+  (map string->number listOfstrings))
+
+(define (sum-list lst)
+  (apply + lst))
+
+(module+ test
+  (require rackunit)
+  (check-equal? (sum-list '(1 2 3)) 6))
